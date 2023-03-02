@@ -18,32 +18,54 @@ object Problem1 {
 
     /* Part A */
     def childrenHelper(parent1: String, parent2: String, key:String): Boolean = {
-        if (royalParent.get(key).getOrElse(("","",""))._1.equals(parent1) && royalParent.get(key).getOrElse("", "", "")._2.equals(parent2)) true
+        println(royalParent.get(key).getOrElse(("", "", "")))
+        println(royalParent.get(key).getOrElse(("", "", ""))._1)
+        if (royalParent.get(key).getOrElse(("","",""))._2.equals(parent1) && royalParent.get(key).getOrElse("", "", "")._3.equals(parent2)) true
         // else if (royalParent.get(key)._1 == parent2 && royalParent.get(key)._2 == parent1) true
         else false
-        // println(royalParent.get(key))
+        // println(royalParent.get(key)) // def childrenHelper2(parent1: String, parent2: String, key:String): Optional[List[String]] = {
+
+    // } 
         // true
     }
 
+    // def childrenHelper2(parent1: String, parent2: String, key:String): Optional[List[String]] = {
+
+    // } 
+
     def children(parent1: String, parent2: String): Option[List[String]] = {
+
+        var l1: List[String] = List()
+        // var test = 0
+
         
-        for (
-            x <- royalParent.keys
-            
-            
-        // } if (royalParent.get(x) == (_, parent1, parent2)) Some(x)
-        ) yield 
+        val y = for (
+            x <- royalParent.keys.toList
 
-        // None
-            {
-                if (childrenHelper(parent1, parent2, x))
-                // println(x)
-            }
-        None
+        ) yield x
 
-        // royalParent.get(x)
+        def go(childs: List[String], lst: List[String]): List[String] = childs match {
+            case Nil => (lst)
+            case (x:: xs) => {
+                if (royalParent.get(x).getOrElse(("","",""))._2.equals(parent1) && royalParent.get(x).getOrElse("", "", "")._3.equals(parent2)) {
+                    val newlist = lst ::: (x :: Nil)
+                    go(xs, newlist)
+                }
+                else go(xs, lst)
+            } 
+        
+        }
+        
+        // val a = for {
+        //     z <- y if (royalParent.get(y).getOrElse(("","",""))._2.equals(parent1) && royalParent.get(y).getOrElse("", "", "")._3.equals(parent2))
+        // } yield z
+        
+        // println(test)
+        // (l1) ::: List("hello")
 
-
+        val l2 = go(y, l1)
+        return Some(l2)
+        return None
     }
 
     /* Part B */
